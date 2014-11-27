@@ -22,7 +22,7 @@ public:
     V2(V3 &v) : x(v.x), y(v.y) {};
     ~V2() {};
     
-    operator V3() { return {x, y, 0}; }
+    operator V3() const { return {x, y, 0}; }
 };
 
 #endif /* defined(__Garfield__Vector2__) */
