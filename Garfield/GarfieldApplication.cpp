@@ -49,6 +49,8 @@ GarfieldApplication::APP_STATE GarfieldApplication::init(ushort width, ushort he
         return APP_FAILED;
     }
     
+    srand((unsigned)time(0));
+    
     return APP_OK;
 }
 
@@ -66,6 +68,12 @@ GarfieldApplication::APP_STATE GarfieldApplication::run(ushort width, ushort hei
     
     while(_running) {
         currentTime = SDL_GetTicks();
+        
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        
+        currentMouse = {static_cast<float>(x), static_cast<float>(y)};
+        
         while (SDL_PollEvent(&ev))
             onEvent(&ev);
         
@@ -74,7 +82,9 @@ GarfieldApplication::APP_STATE GarfieldApplication::run(ushort width, ushort hei
         
         if (!_running)
             break;
+        
         lastTime = currentTime;
+        lastMouse = currentMouse;
     }
     destroy();
     
@@ -102,6 +112,16 @@ V2 GarfieldApplication::fromViewPort(const V3 &v)
     return {width / 2 * v.x + width / 2, height / 2 - (width / 2) * v.y};
 }
 
+uint GarfieldApplication::getWidth()
+{
+    return width;
+}
+
+uint GarfieldApplication::getHeight()
+{
+    return height;
+}
+
 Matrix4* GarfieldApplication::getTransform()
 {
     return &tMat;
@@ -115,6 +135,16 @@ uint GarfieldApplication::getTime()
 uint GarfieldApplication::getDeltaTime()
 {
     return currentTime - lastTime;
+}
+
+V2 GarfieldApplication::getMouse()
+{
+    return currentMouse;
+}
+
+V2 GarfieldApplication::getDeltaMouse()
+{
+    return currentMouse - lastMouse;
 }
 
 void GarfieldApplication::clear(const Color &c)
@@ -140,6 +170,16 @@ void GarfieldApplication::setFillColor(const Color &c)
 const Color& GarfieldApplication::getFillColor() const
 {
     return fillColor;
+}
+
+float GarfieldApplication::random()
+{
+    return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+}
+
+float GarfieldApplication::random(float low, float high)
+{
+    return low + (high - low) * random();
 }
 
 void GarfieldApplication::rect(float x, float y, float w, float h)

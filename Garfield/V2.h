@@ -23,6 +23,10 @@ public:
     ~V2() {};
     
     operator V3() const { return {x, y, 0}; }
+    V2 operator-(const V2 &other) const
+    {
+        return {x - other.x, y - other.y};
+    }
 };
 
 #endif /* defined(__Garfield__Vector2__) */

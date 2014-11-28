@@ -10,9 +10,29 @@
 #include "Matrix4.h"
 #include "MyApplication.h"
 
+void MyApplication::updatePoint(Point &p)
+{
+    p.x = modff((p.x + p.v.x) / getWidth(), nullptr); // E_BADACES, should probably find a better way to do this
+    if(p.x < 0) p.x = getWidth();
+    p.y = modff(p.y + p.v.y / getHeight(), nullptr);
+    if(p.y < 0) p.y = getHeight();
+    
+    p.v.x *= 0.99;
+    p.v.y *= 0.99;
+    
+    p.c.g = 255 / (1 + abs(p.v.x));
+    p.c.b = 255 / (1 + abs(p.v.y));
+}
+
 void MyApplication::create()
 {
-    printf("Hello, world! I am run once after the program has successfully initialized!\n");
+    for(uint i = 0; i < N_PARTICLES; ++i)
+    {
+        pts[i].x = random() * getWidth();
+        pts[i].y = random() * getHeight();
+        pts[i].c = {0xff, 0xff, 0xff};
+        pts[i].v = {0, 0};
+    }
 }
 
 void MyApplication::render()
@@ -20,17 +40,18 @@ void MyApplication::render()
     // TODO: Add pushing/popping current matrix state
     // Figure out how to/if to separate stroke and fill colors
     // Start trying to port examples!
+    int mx, my;
+    SDL_GetMouseState(&mx, &my);
     
     getTransform()->identity();
     clear({0x00});
-    setFillColor({0xff, 0xff, 0xff, 0xff});
-    rect(200, 200, 200, 200);
-    rect(100, 300, 200, 200);
-    line({100 + 100 * sinf(getTime() / (float)1000), 0}, {50, 50});
-    
-    V3 v = {25, 125};
-    v = getTransform()->rotateZ(sinf(getTime() / (float)1000))->transform(v);
-    point(v);
+    for(Point &p : pts) {
+        updatePoint(p);
+        
+        setFillColor(p.c);
+        p.v.x = 1 / (1 + (getMouse().x - p.x));
+        point(p);
+    }
 }
 
 void MyApplication::destroy()

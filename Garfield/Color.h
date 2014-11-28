@@ -10,15 +10,16 @@
 #define __Garfield__Color__
 
 #include <stdio.h>
+#include <SDL2/SDL.h>
 
 class Color
 {
 public:
-    unsigned short r, g, b, a;
+    uint8_t r, g, b, a;
     
-    Color(unsigned short r, unsigned short g, unsigned short b, unsigned short a) : r(r), g(g), b(b), a(a) {};
-    Color(char r, char g, char b) : r(r), g(g), b(b), a(0xff) {};
-    Color(char x) : r(x), g(x), b(x), a(0xff) {};
+    Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) : r(r), g(g), b(b), a(a) {};
+    Color(uint8_t r, uint8_t g, uint8_t b) : r(r), g(g), b(b), a(0xff) {};
+    Color(uint8_t x) : r(x), g(x), b(x), a(0xff) {};
     ~Color() {};
 };
 

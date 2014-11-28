@@ -52,6 +52,7 @@ private:
     uint lastTime = 0;
     SDL_Rect primaryRect;
     Color fillColor{0x00};
+    V2 lastMouse{0}, currentMouse{0};
     
 protected:
     ////// PRIMARY METHODS //////
@@ -72,13 +73,22 @@ protected:
     // Converts a vector in viewport coordinates into a new vector in screen space coordinates
     V2 fromViewPort(const V3 &v);
     
+    uint getWidth();
+    uint getHeight();
+    
     Matrix4* getTransform();
     
     uint getTime();
     uint getDeltaTime();
     
+    V2 getMouse();
+    V2 getDeltaMouse();
+    
     void setFillColor(const Color &c);
     const Color& getFillColor() const;
+    
+    float random();
+    float random(float low, float high);
     
     ////// DRAWING METHODS //////
     
