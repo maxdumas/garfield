@@ -73,8 +73,8 @@ protected:
     // Converts a vector in viewport coordinates into a new vector in screen space coordinates
     V2 fromViewPort(const V3 &v);
     
-    uint getWidth();
-    uint getHeight();
+    const uint getWidth() const;
+    const uint getHeight() const;
     
     Matrix4* getTransform();
     

@@ -20,12 +20,13 @@ struct Point : public V3
     Color c;
 };
 
-class MyApplication : public GarfieldApplication
+class FlurryApplication : public GarfieldApplication
 {
 protected:
-    constexpr static const int N_PARTICLES = 1000;
+    constexpr static const int N_PARTICLES = 40000;
     
     Point pts[N_PARTICLES];
+    bool **occupationMap;
     
     void create();
     
@@ -34,6 +35,10 @@ protected:
     void destroy();
     
     void updatePoint(Point &p);
+
+    inline void setOccupationMap(Point &p, bool v) const;
+    
+    inline const bool getOccupationMap(Point &p) const;
 };
 
 #endif /* defined(__Garfield__MyApplication__) */

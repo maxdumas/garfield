@@ -10,6 +10,7 @@
 #define __Garfield__Vector2__
 
 #include <stdio.h>
+#include <cmath>
 #include "V3.h"
 
 class V2
@@ -22,8 +23,29 @@ public:
     V2(V3 &v) : x(v.x), y(v.y) {};
     ~V2() {};
     
+    float length() const
+    {
+        return sqrtf(x * x + y * y);
+    }
+    
     operator V3() const { return {x, y, 0}; }
+    
+    V2 operator+(const V2 &other) const
+    {
+        return {x + other.x, y + other.y};
+    }
+    
+    V2 operator+(const V3 &other) const
+    {
+        return {x + other.x, y + other.y};
+    }
+    
     V2 operator-(const V2 &other) const
+    {
+        return {x - other.x, y - other.y};
+    }
+    
+    V2 operator-(const V3 &other) const
     {
         return {x - other.x, y - other.y};
     }

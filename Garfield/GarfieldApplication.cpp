@@ -112,12 +112,12 @@ V2 GarfieldApplication::fromViewPort(const V3 &v)
     return {width / 2 * v.x + width / 2, height / 2 - (width / 2) * v.y};
 }
 
-uint GarfieldApplication::getWidth()
+const uint GarfieldApplication::getWidth() const
 {
     return width;
 }
 
-uint GarfieldApplication::getHeight()
+const uint GarfieldApplication::getHeight() const
 {
     return height;
 }
