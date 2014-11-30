@@ -76,14 +76,14 @@ void FlurryApplication::render()
     for(Point &p : pts) {
         updatePoint(p);
         
-        setFillColor(p.c);
-        float q = 10.f / (1.f + (getMouse() - p).length());
-//        if(q > .3f) {
+        if(isMousePressed(ANY_BUTTON)) {
+            float q = 10.f / (1.f + (getMouse() - p).length());
             V2 d = getDeltaMouse();
-        p.v = V2{(d.x > 5.f ? 5.f : d.x) * q,
-                 (d.y > 5.f ? 5.f : d.y) * q}
+            p.v = V2{(d.x > 5.f ? 5.f : d.x) * q,
+                     (d.y > 5.f ? 5.f : d.y) * q}
                 + p.v;
-//        }
+        }
+        setFillColor(p.c);
         point(p);
     }
 }

@@ -130,7 +130,7 @@ Matrix4* Matrix4::scale(float a, float b, float c)
     return this;
 }
 
-V3 Matrix4::transform(V3 &p)
+V3 Matrix4::transform(const V3 &p)
 {
     float point[4] = {p.x, p.y, p.z, 1};
     float newPoint[4] = {0, 0, 0, 0};

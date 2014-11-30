@@ -17,6 +17,14 @@
 #include "Matrix4.h"
 #include "Color.h"
 
+enum MouseButton
+{
+    LEFT_BUTTON = SDL_BUTTON(SDL_BUTTON_LEFT),
+    RIGHT_BUTTON = SDL_BUTTON(SDL_BUTTON_RIGHT),
+    MIDDLE_BUTTON = SDL_BUTTON(SDL_BUTTON_MIDDLE),
+    ANY_BUTTON = LEFT_BUTTON | RIGHT_BUTTON | MIDDLE_BUTTON
+};
+
 class GarfieldApplication
 {
 public:
@@ -53,6 +61,7 @@ private:
     SDL_Rect primaryRect;
     Color fillColor{0x00};
     V2 lastMouse{0}, currentMouse{0};
+    Uint32 lastMouseState, currentMouseState;
     
 protected:
     ////// PRIMARY METHODS //////
@@ -78,11 +87,15 @@ protected:
     
     Matrix4* getTransform();
     
-    uint getTime();
-    uint getDeltaTime();
+    uint getMillis();
+    uint getDeltaMillis();
+    
+    float getSecs();
+    float getDeltaSecs();
     
     V2 getMouse();
     V2 getDeltaMouse();
+    const bool isMousePressed(const MouseButton b) const;
     
     void setFillColor(const Color &c);
     const Color& getFillColor() const;

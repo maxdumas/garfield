@@ -70,7 +70,7 @@ GarfieldApplication::APP_STATE GarfieldApplication::run(ushort width, ushort hei
         currentTime = SDL_GetTicks();
         
         int x, y;
-        SDL_GetMouseState(&x, &y);
+        currentMouseState = SDL_GetMouseState(&x, &y);
         
         currentMouse = {static_cast<float>(x), static_cast<float>(y)};
         
@@ -84,6 +84,7 @@ GarfieldApplication::APP_STATE GarfieldApplication::run(ushort width, ushort hei
             break;
         
         lastTime = currentTime;
+        lastMouseState = currentMouseState;
         lastMouse = currentMouse;
     }
     destroy();
@@ -127,14 +128,24 @@ Matrix4* GarfieldApplication::getTransform()
     return &tMat;
 }
 
-uint GarfieldApplication::getTime()
+uint GarfieldApplication::getMillis()
 {
     return currentTime;
 }
 
-uint GarfieldApplication::getDeltaTime()
+uint GarfieldApplication::getDeltaMillis()
 {
     return currentTime - lastTime;
+}
+
+float GarfieldApplication::getSecs()
+{
+    return getMillis() / 1000.f;
+}
+
+float GarfieldApplication::getDeltaSecs()
+{
+    return getDeltaMillis() / 1000.f;
 }
 
 V2 GarfieldApplication::getMouse()
@@ -145,6 +156,11 @@ V2 GarfieldApplication::getMouse()
 V2 GarfieldApplication::getDeltaMouse()
 {
     return currentMouse - lastMouse;
+}
+
+const bool GarfieldApplication::isMousePressed(const MouseButton b) const
+{
+    return currentMouseState & b;
 }
 
 void GarfieldApplication::clear(const Color &c)

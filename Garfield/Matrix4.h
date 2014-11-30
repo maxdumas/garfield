@@ -44,7 +44,7 @@ public:
     Matrix4* scale(float a);
     Matrix4* scale(float a, float b, float c);
     
-    V3 transform(V3 &p);
+    V3 transform(const V3 &p);
 };
 
 #endif /* defined(__Garfield__Matrix4__) */

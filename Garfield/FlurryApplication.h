@@ -1,13 +1,15 @@
 //
-//  MyApplication.h
+//  FlurryApplication.h
 //  Garfield
+//  This application exists mostly as a stress test for basic drawing functions
+//  of the framework, and to test mouse behavior.
 //
 //  Created by Max Dumas on 11/23/14.
 //  Copyright (c) 2014 Max Dumas. All rights reserved.
 //
 
-#ifndef __Garfield__MyApplication__
-#define __Garfield__MyApplication__
+#ifndef __Garfield__FlurryApplication__
+#define __Garfield__FlurryApplication__
 
 #include <stdio.h>
 #include "GarfieldApplication.h"
@@ -26,6 +28,8 @@ protected:
     constexpr static const int N_PARTICLES = 40000;
     
     Point pts[N_PARTICLES];
+    
+    // Occupation map is used as a position hash to quickly check if 2 particles are occupying the same space
     bool **occupationMap;
     
     void create();
@@ -41,4 +45,4 @@ protected:
     inline const bool getOccupationMap(Point &p) const;
 };
 
-#endif /* defined(__Garfield__MyApplication__) */
+#endif /* defined(__Garfield__FlurryApplication__) */
